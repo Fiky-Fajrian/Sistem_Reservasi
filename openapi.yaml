@@ -1,0 +1,842 @@
+openapi: 3.0.3
+
+info:
+  title: REST API Sistem Pemesanan Kos
+  description: >
+    API untuk mengelola data kos, reservasi, dan pembayaran pada
+    Sistem Informasi Pemesanan Kos Berbasis Web dengan Fitur Reservasi dan Pembayaran Online.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local Development Server
+
+tags:
+  - name: Kos
+    description: Operasi data kos
+  - name: Reservasi
+    description: Operasi data reservasi
+  - name: Pembayaran
+    description: Operasi data pembayaran
+
+paths:
+
+  /api/kos:
+
+    get:
+      tags:
+        - Kos
+      summary: Mengambil seluruh data kos
+      description: Mengembalikan daftar seluruh kos yang tersedia.
+      operationId: getAllKos
+
+      responses:
+
+        '200':
+          description: Data kos berhasil ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KosListResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    post:
+      tags:
+        - Kos
+      summary: Menambahkan data kos baru
+      description: Menambahkan satu data kos.
+      operationId: createKos
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KosInput'
+
+            example:
+              nama_kos: "Kos Melati"
+              alamat: "Jl. Raya Banyuwangi"
+              harga: 750000
+              fasilitas: "WiFi, Kamar Mandi Dalam"
+              status: "Tersedia"
+
+      responses:
+
+        '201':
+          description: Kos berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KosResponse'
+
+        '400':
+          description: Data yang dikirim tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /api/kos/{id}:
+
+    get:
+      tags:
+        - Kos
+      summary: Mengambil kos berdasarkan ID
+      description: Mengembalikan satu data kos berdasarkan ID.
+      operationId: getKosById
+
+      parameters:
+
+        - name: id
+          in: path
+          description: ID kos
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+
+        '200':
+          description: Data kos ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KosResponse'
+
+        '404':
+          description: Kos tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    patch:
+      tags:
+        - Kos
+      summary: Memperbarui data kos
+      description: Mengubah data kos berdasarkan ID.
+      operationId: updateKos
+
+      parameters:
+
+        - name: id
+          in: path
+          description: ID kos
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KosUpdateInput'
+
+            example:
+              nama_kos: "Kos Melati Indah"
+              harga: 800000
+              status: "Tersedia"
+
+      responses:
+
+        '200':
+          description: Data kos berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KosResponse'
+
+        '400':
+          description: Data yang dikirim tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Kos tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /api/reservasi:
+
+    get:
+      tags:
+        - Reservasi
+      summary: Mengambil seluruh data reservasi
+      description: Mengembalikan daftar seluruh reservasi.
+      operationId: getAllReservasi
+
+      responses:
+
+        '200':
+          description: Data reservasi berhasil ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservasiListResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    post:
+      tags:
+        - Reservasi
+      summary: Membuat reservasi baru
+      description: Membuat reservasi kos oleh penyewa.
+      operationId: createReservasi
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservasiInput'
+
+            example:
+              nama_penyewa: "Andi"
+              kos_id: 1
+              nomor_kamar: "Kamar 01"
+              tanggal_mulai: "2026-10-01"
+              durasi: 6
+              harga: 750000
+              total_biaya: 4500000
+              status_reservasi: "Menunggu"
+
+      responses:
+
+        '201':
+          description: Reservasi berhasil dibuat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservasiResponse'
+
+        '400':
+          description: Data reservasi tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Kos tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /api/reservasi/{id}:
+
+    get:
+      tags:
+        - Reservasi
+      summary: Mengambil reservasi berdasarkan ID
+      description: Mengembalikan satu data reservasi berdasarkan ID.
+      operationId: getReservasiById
+
+      parameters:
+
+        - name: id
+          in: path
+          description: ID reservasi
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+
+        '200':
+          description: Data reservasi ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservasiResponse'
+
+        '404':
+          description: Reservasi tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    patch:
+      tags:
+        - Reservasi
+      summary: Memperbarui status reservasi
+      description: Mengubah data atau status reservasi berdasarkan ID.
+      operationId: updateReservasi
+
+      parameters:
+
+        - name: id
+          in: path
+          description: ID reservasi
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservasiUpdateInput'
+
+            example:
+              status_reservasi: "Dikonfirmasi"
+
+      responses:
+
+        '200':
+          description: Data reservasi berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservasiResponse'
+
+        '400':
+          description: Data reservasi tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Reservasi tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /api/pembayaran:
+
+    get:
+      tags:
+        - Pembayaran
+      summary: Mengambil seluruh data pembayaran
+      description: Mengembalikan daftar seluruh pembayaran.
+      operationId: getAllPembayaran
+
+      responses:
+
+        '200':
+          description: Data pembayaran berhasil ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PembayaranListResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    post:
+      tags:
+        - Pembayaran
+      summary: Menambahkan data pembayaran
+      description: Menambahkan data pembayaran untuk sebuah reservasi.
+      operationId: createPembayaran
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PembayaranInput'
+
+            example:
+              id_reservasi: 1
+              nama_penyewa: "Andi"
+              jumlah_pembayaran: 4500000
+              metode_pembayaran: "Transfer Bank"
+              tanggal_pembayaran: "2026-09-24"
+              status_pembayaran: "Berhasil"
+
+      responses:
+
+        '201':
+          description: Pembayaran berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PembayaranResponse'
+
+        '400':
+          description: Data pembayaran tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Reservasi tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+components:
+
+  schemas:
+
+    Kos:
+      type: object
+      properties:
+
+        id:
+          type: integer
+          example: 1
+
+        nama_kos:
+          type: string
+          example: "Kos Melati"
+
+        alamat:
+          type: string
+          example: "Jl. Raya Banyuwangi"
+
+        harga:
+          type: integer
+          example: 750000
+
+        fasilitas:
+          type: string
+          example: "WiFi, Kamar Mandi Dalam"
+
+        status:
+          type: string
+          example: "Tersedia"
+
+
+    KosInput:
+      type: object
+      required:
+        - nama_kos
+        - alamat
+        - harga
+        - fasilitas
+        - status
+
+      properties:
+
+        nama_kos:
+          type: string
+          example: "Kos Melati"
+
+        alamat:
+          type: string
+          example: "Jl. Raya Banyuwangi"
+
+        harga:
+          type: integer
+          example: 750000
+
+        fasilitas:
+          type: string
+          example: "WiFi, Kamar Mandi Dalam"
+
+        status:
+          type: string
+          example: "Tersedia"
+
+
+    KosUpdateInput:
+      type: object
+
+      properties:
+
+        nama_kos:
+          type: string
+          example: "Kos Melati Indah"
+
+        alamat:
+          type: string
+          example: "Jl. Raya Banyuwangi"
+
+        harga:
+          type: integer
+          example: 800000
+
+        fasilitas:
+          type: string
+          example: "WiFi, Kamar Mandi Dalam, Parkir"
+
+        status:
+          type: string
+          example: "Tersedia"
+
+
+    KosResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          $ref: '#/components/schemas/Kos'
+
+
+    KosListResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Kos'
+
+
+    Reservasi:
+      type: object
+      properties:
+
+        id:
+          type: integer
+          example: 1
+
+        nama_penyewa:
+          type: string
+          example: "Andi"
+
+        kos_id:
+          type: integer
+          example: 1
+
+        nomor_kamar:
+          type: string
+          example: "Kamar 01"
+
+        tanggal_mulai:
+          type: string
+          format: date
+          example: "2026-10-01"
+
+        durasi:
+          type: integer
+          example: 6
+
+        harga:
+          type: integer
+          example: 750000
+
+        total_biaya:
+          type: integer
+          example: 4500000
+
+        status_reservasi:
+          type: string
+          example: "Menunggu"
+
+
+    ReservasiInput:
+      type: object
+      required:
+        - nama_penyewa
+        - kos_id
+        - nomor_kamar
+        - tanggal_mulai
+        - durasi
+        - harga
+        - total_biaya
+        - status_reservasi
+
+      properties:
+
+        nama_penyewa:
+          type: string
+          example: "Andi"
+
+        kos_id:
+          type: integer
+          example: 1
+
+        nomor_kamar:
+          type: string
+          example: "Kamar 01"
+
+        tanggal_mulai:
+          type: string
+          format: date
+          example: "2026-10-01"
+
+        durasi:
+          type: integer
+          example: 6
+
+        harga:
+          type: integer
+          example: 750000
+
+        total_biaya:
+          type: integer
+          example: 4500000
+
+        status_reservasi:
+          type: string
+          example: "Menunggu"
+
+
+    ReservasiUpdateInput:
+      type: object
+
+      properties:
+
+        nama_penyewa:
+          type: string
+          example: "Andi Pratama"
+
+        nomor_kamar:
+          type: string
+          example: "Kamar 01"
+
+        tanggal_mulai:
+          type: string
+          format: date
+          example: "2026-10-01"
+
+        durasi:
+          type: integer
+          example: 6
+
+        harga:
+          type: integer
+          example: 750000
+
+        total_biaya:
+          type: integer
+          example: 4500000
+
+        status_reservasi:
+          type: string
+          example: "Dikonfirmasi"
+
+
+    ReservasiResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          $ref: '#/components/schemas/Reservasi'
+
+
+    ReservasiListResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservasi'
+
+
+    Pembayaran:
+      type: object
+      properties:
+
+        id:
+          type: integer
+          example: 1
+
+        id_reservasi:
+          type: integer
+          example: 1
+
+        nama_penyewa:
+          type: string
+          example: "Andi"
+
+        jumlah_pembayaran:
+          type: integer
+          example: 4500000
+
+        metode_pembayaran:
+          type: string
+          example: "Transfer Bank"
+
+        tanggal_pembayaran:
+          type: string
+          format: date
+          example: "2026-09-24"
+
+        status_pembayaran:
+          type: string
+          example: "Berhasil"
+
+
+    PembayaranInput:
+      type: object
+      required:
+        - id_reservasi
+        - nama_penyewa
+        - jumlah_pembayaran
+        - metode_pembayaran
+        - tanggal_pembayaran
+        - status_pembayaran
+
+      properties:
+
+        id_reservasi:
+          type: integer
+          example: 1
+
+        nama_penyewa:
+          type: string
+          example: "Andi"
+
+        jumlah_pembayaran:
+          type: integer
+          example: 4500000
+
+        metode_pembayaran:
+          type: string
+          example: "Transfer Bank"
+
+        tanggal_pembayaran:
+          type: string
+          format: date
+          example: "2026-09-24"
+
+        status_pembayaran:
+          type: string
+          example: "Berhasil"
+
+
+    PembayaranResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          $ref: '#/components/schemas/Pembayaran'
+
+
+    PembayaranListResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "success"
+
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pembayaran'
+
+
+    ErrorResponse:
+      type: object
+
+      properties:
+
+        status:
+          type: string
+          example: "error"
+
+        message:
+          type: string
+          example: "Data tidak ditemukan"
