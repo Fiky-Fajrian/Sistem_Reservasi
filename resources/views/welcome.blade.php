@@ -4,7 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard Koshub</title>
-        <link rel="stylesheet" href="{{ asset('css/koshub') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('koshub.css') }}">
     </head>
     <body>
         
@@ -108,7 +111,7 @@
                         <h2>Kelola properti Anda<br>lebih praktis bersama KosHub.</h2>
                         <p>Pantau kamar, penghuni, dan operasional kos dalam satu tempat.</p>
                     </div>
-                    <div class="banner-illustration" aria-hidden="true"">
+                    <div class="banner-illustration" aria-hidden="true">
                         <div class="building">
                             <div class="building-roof"></div>
                             <div class="building-body">
@@ -130,8 +133,8 @@
                 </section>
 
                 <section class="stats-grid">
-                    <article class="stats-card">
-                        <div class="stats-top">
+                    <article class="stat-card">
+                        <div class="stat-top">
                             <span class="stat-label">Total kamar</span>
                             <div class="stat-icon blue">▦</div>
                         </div>
@@ -280,6 +283,6 @@
         </main>
     </div>
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
-        <script src="{{ asset('js/koshub.js') }}"></script>
+        <script src="{{ asset('koshub.js') }}"></script>
     </body>
 </html>
