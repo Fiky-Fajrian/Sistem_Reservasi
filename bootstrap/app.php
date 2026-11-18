@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\EnsureUserIsPenyewa;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role.penyewa' => EnsureUserIsPenyewa::class,
+        ]);
+
+        // Pengguna yang sudah login dan membuka halaman tamu (login/daftar)
+        // diarahkan sesuai role-nya.
+        $middleware->redirectUsersTo(fn (Request $request): string => $request->user()?->role === User::ROLE_PENYEWA
+            ? route('landing')
+            : route('dashboard'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

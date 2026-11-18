@@ -28,7 +28,7 @@
                 <a href="/dashboard" class="nav-link active">
                     <span class="nav-icon">▦</span> DASHBOARD
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="/properti" class="nav-link">
                     <span class="nav-icon">⌂</span> Properti Saya
                 </a>
                  <a href="#" class="nav-link">
@@ -51,6 +51,9 @@
                 </a>
                 <a href="#" class="nav-link">
                     <span class="nav-icon">⚙</span> Pengaturan
+                </a>
+                <a href="/properti#keluhan" class="nav-link">
+                    <span class="nav-icon">💬</span> Chat & Keluhan
                 </a>
             </nav>
 

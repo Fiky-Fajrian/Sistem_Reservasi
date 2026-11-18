@@ -4,19 +4,38 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservasi;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ReservasiController extends Controller
 {
-        public function update(Request $request, $id): JsonResponse
+    public function store(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'nama_penyewa' => ['required', 'string'],
+            'id_kos' => ['required', 'exists:kos,id'],
+            'nomor_kamar' => ['required', 'string'],
+            'tanggal_mulai' => ['required', 'date'],
+            'durasi_bulan' => ['required', 'integer', 'min:1'],
+        ]);
+
+        $reservasi = Reservasi::create($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Reservasi berhasil dibuat',
+            'data' => $reservasi,
+        ], 201);
+    }
+
+    public function update(Request $request, $id): JsonResponse
     {
         $reservasi = Reservasi::find($id);
 
-        if (!$reservasi) {
+        if (! $reservasi) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Data reservasi tidak ditemukan'
+                'message' => 'Data reservasi tidak ditemukan',
             ], 404);
         }
 
@@ -33,8 +52,7 @@ class ReservasiController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Reservasi berhasil diperbarui',
-            'data' => $reservasi
+            'data' => $reservasi,
         ]);
     }
 }
-    

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard Koshub</title>
-        <link rel="stylesheet" href="{{ public('koshub.css') }}">
+        <link rel="stylesheet" href="{{ asset('koshub.css') }}">
     </head>
     <body>
         
@@ -280,6 +280,6 @@
         </main>
     </div>
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
-        <script src="{{ asset('js/koshub.js') }}"></script>
+        <script src="{{ asset('koshub.js') }}"></script>
     </body>
 </html>

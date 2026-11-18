@@ -15,4 +15,13 @@ class Reservasi extends Model
         'tanggal_mulai',
         'durasi_bulan',
     ];
+
+    /**
+     * Data reservasi menggunakan nama penyewa (string), namun
+     * tetap terhubung ke data kos yang dipesan.
+     */
+    public function kos()
+    {
+        return $this->belongsTo(Kos::class, 'id_kos');
+    }
 }

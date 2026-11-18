@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
+use Database\Factories\KosFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Kos extends Model
 {
+    /** @use HasFactory<KosFactory> */
+    use HasFactory;
+
     protected $table = 'kos';
 
     protected $fillable = [
         'nama_kos',
         'alamat',
+        'lokasi',
         'harga',
         'fasilitas',
         'jumlah_kamar',
+        'status',
     ];
 }
