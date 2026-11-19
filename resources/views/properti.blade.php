@@ -35,9 +35,9 @@
                 <a href="#" class="nav-link">
                     <span class="nav-icon">▤</span> Manajemen Kamar
                 </a>
-                <a href="#" class="nav-link">
-                    <span class="nav-icon">♙</span> Data Penghuni
-                </a>
+                <a href="{{ route('penghuni.index') }}" class="nav-link">
+    <span class="nav-icon">♙</span> Data Penghuni
+</a>
                 <a href="{{ route('tagihan.index') }}" class="nav-link">
                     <span class="nav-icon">▧</span> Tagihan & Pembayaran
                 </a>

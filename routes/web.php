@@ -7,6 +7,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PropertiController;
 use App\Http\Controllers\ReservasiController;
+use App\Http\Controllers\PenghuniController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman utama: Landing Page
@@ -46,3 +47,18 @@ Route::get('/properti', [PropertiController::class, 'index'])
 // Tagihan, pembayaran, dan monitoring meteran listrik/air
 Route::get('/tagihan-pembayaran', [BillingMeteranController::class, 'index'])->name('tagihan.index');
 Route::get('/meteran', [BillingMeteranController::class, 'index'])->name('meteran.index');
+
+// Manajemen Data Penghuni
+Route::middleware('auth')->group(function () {
+    Route::get('/penghuni', [PenghuniController::class, 'index'])
+        ->name('penghuni.index');
+
+    Route::post('/penghuni', [PenghuniController::class, 'store'])
+        ->name('penghuni.store');
+
+    Route::put('/penghuni/{id}', [PenghuniController::class, 'update'])
+        ->name('penghuni.update');
+
+    Route::delete('/penghuni/{id}', [PenghuniController::class, 'destroy'])
+        ->name('penghuni.destroy');
+});
