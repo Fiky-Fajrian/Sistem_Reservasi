@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BillingMeteranController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PropertiController;
@@ -41,3 +42,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 // Manajemen Properti & Kamar (sesuai mockup)
 Route::get('/properti', [PropertiController::class, 'index'])
     ->name('properti.index');
+
+// Tagihan, pembayaran, dan monitoring meteran listrik/air
+Route::get('/tagihan-pembayaran', [BillingMeteranController::class, 'index'])->name('tagihan.index');
+Route::get('/meteran', [BillingMeteranController::class, 'index'])->name('meteran.index');

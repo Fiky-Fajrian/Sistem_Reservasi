@@ -38,10 +38,10 @@
                 <a href="#" class="nav-link">
                     <span class="nav-icon">♙</span> Data Penghuni
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('tagihan.index') }}" class="nav-link">
                     <span class="nav-icon">▧</span> Tagihan & Pembayaran
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('meteran.index') }}" class="nav-link">
                     <span class="nav-icon">ϟ</span> Meteran
                 </a>
 
