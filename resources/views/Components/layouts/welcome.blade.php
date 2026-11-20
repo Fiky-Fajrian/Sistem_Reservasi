@@ -22,22 +22,22 @@
             <div class="menu-label">MENU UTAMA</div>
 
             <nav class="navigation">
-                <a href="/dashboard" class="nav-link active">
+                <a href="{{ route('dashboard') }}" class="nav-link active">
                     <span class="nav-icon">▦</span> DASHBOARD
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('properti.index') }}" class="nav-link">
                     <span class="nav-icon">⌂</span> Properti Saya
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('kamar.index') }}" class="nav-link">
                     <span class="nav-icon">▤</span> Manajemen Kamar
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('penghuni.index') }}" class="nav-link">
                     <span class="nav-icon">♙</span> Data Penghuni
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('tagihan.index') }}" class="nav-link">
                     <span class="nav-icon">▧</span> Tagihan & Pembayaran
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('meteran.index') }}" class="nav-link">
                     <span class="nav-icon">ϟ</span> Meteran
                 </a>
 
@@ -48,6 +48,9 @@
                 </a>
                 <a href="#" class="nav-link">
                     <span class="nav-icon">⚙</span> Pengaturan
+                </a>
+                <a href="{{ route('properti.index') }}#keluhan" class="nav-link">
+                    <span class="nav-icon">💬</span> Chat & Keluhan
                 </a>
             </nav>
 

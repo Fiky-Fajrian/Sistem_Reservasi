@@ -61,16 +61,16 @@
 
     <div class="menu-label">MENU UTAMA</div>
     <nav class="navigation">
-        <a href="/dashboard" class="nav-link">
+        <a href="{{ route('dashboard') }}" class="nav-link">
             <span class="nav-icon">▦</span> DASHBOARD
         </a>
-        <a href="/properti" class="nav-link">
+        <a href="{{ route('properti.index') }}" class="nav-link">
             <span class="nav-icon">⌂</span> Properti Saya
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('kamar.index') }}" class="nav-link">
             <span class="nav-icon">▤</span> Manajemen Kamar
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('penghuni.index') }}" class="nav-link">
             <span class="nav-icon">♙</span> Data Penghuni
         </a>
         <a href="{{ route('tagihan.index') }}" class="nav-link {{ $activePage === 'tagihan' ? 'active' : '' }}">
@@ -87,7 +87,7 @@
         <a href="#" class="nav-link">
             <span class="nav-icon">⚙</span> Pengaturan
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('properti.index') }}#keluhan" class="nav-link">
             <span class="nav-icon">💬</span> Chat &amp; Keluhan
         </a>
     </nav>
@@ -99,16 +99,16 @@
             <a href="#">Pusat Bantuan →</a>
         </div>
         <div class="user-profile">
-            <div class="avatar">FP</div>
+            <div class="avatar">{{ auth()->check() ? strtoupper(mb_substr(auth()->user()->name, 0, 2)) : 'FP' }}</div>
             <div class="user-info">
-                <strong>Pemilik Kos</strong>
+                <strong>{{ auth()->user()->name ?? 'Pemilik Kos' }}</strong>
                 <span>Administrator</span>
             </div>
             <span class="profile-menu">⋯</span>
         </div>
     </div>
 </aside>
-<main class="main-content"><header class="topbar"><div class="crumb">Beranda　/　Manajemen Tagihan & Billing　/　<b>Histori & Rekapitulasi Meteran</b></div><div class="top-user">Hendra Wijaya　 <span style="color:#8994a8;font-weight:400">Pemilik Kos</span></div></header>
+<main class="main-content"><header class="topbar"><div class="crumb">Beranda　/　Manajemen Tagihan & Billing　/　<b>Histori & Rekapitulasi Meteran</b></div><div class="top-user">{{ auth()->user()->name ?? 'Hendra Wijaya' }}　 <span style="color:#8994a8;font-weight:400">Pemilik Kos</span></div></header>
 <div class="page"><section class="heading"><div><div class="eyebrow">GRIYA SAMUDRA BANYUWANGI</div><h1>Histori & Rekapitulasi Meteran Utilitas</h1><p>Monitoring catatan kWh listrik dan volume m³ air bulanan seluruh kamar, integrasi tarif otomatis, dan audit verifikasi bukti fisik.</p></div><div class="actions"><button class="btn" onclick="window.print()">⇩ Ekspor Rekap (Excel/PDF)</button><button class="btn" onclick="alert('Pengingat tagihan disiapkan untuk penghuni.')">Kirim Pengingat Massal</button><button class="btn primary" onclick="openModal()">＋ Input Meteran Baru</button></div></section>
 <section class="cards">
 <div class="metric"><div class="metric-head">TOTAL KONSUMSI LISTRIK <span class="metric-icon">ϟ</span></div><strong>2.140 <small>kWh</small></strong><small class="green">↗ +6,2% vs Feb 2026</small><div class="sub">Flat Rp 1.500 / kWh · <b>Rp 3.210.000</b></div></div>
@@ -136,4 +136,7 @@ const rows=[...document.querySelectorAll('#meterRows tr')];let activeTab='all';
 function filterRows(){const q=document.getElementById('search').value.toLowerCase(),f=document.getElementById('floor').value,s=document.getElementById('status').value;let n=0;rows.forEach(r=>{const okText=r.innerText.toLowerCase().includes(q),okFloor=f==='all'||r.dataset.floor===f,okStatus=s==='all'||r.dataset.status===s,okTab=activeTab==='all'||(activeTab==='anomaly'?r.dataset.anomaly==='yes':activeTab==='electric'?true:true);r.style.display=okText&&okFloor&&okStatus&&okTab?'':'none';if(r.style.display!=='none')n++});document.getElementById('rowCount').textContent=`Menampilkan ${n} data sesuai filter dari 25 total kamar aktif`;}
 document.querySelectorAll('.toolbar select,#search').forEach(el=>el.addEventListener('input',filterRows));document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;filterRows()}));
 function openModal(){document.getElementById('meterModal').classList.add('show')}function closeModal(){document.getElementById('meterModal').classList.remove('show')}document.getElementById('meterModal').addEventListener('click',e=>{if(e.target.id==='meterModal')closeModal()});document.getElementById('meterForm').addEventListener('submit',e=>{e.preventDefault();alert('Data input meteran berhasil disiapkan. Untuk menyimpan permanen, perlu dihubungkan ke database meteran.');closeModal();e.target.reset()});
-</script></body></html>
+</script>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<script src="{{ asset('koshub.js') }}"></script>
+</body></html>

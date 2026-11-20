@@ -43,6 +43,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 // Manajemen Properti & Kamar (sesuai mockup)
 Route::get('/properti', [PropertiController::class, 'index'])
     ->name('properti.index');
+Route::get('/manajemen-kamar', [PropertiController::class, 'index'])
+    ->name('kamar.index');
 
 // Tagihan, pembayaran, dan monitoring meteran listrik/air
 Route::get('/tagihan-pembayaran', [BillingMeteranController::class, 'index'])->name('tagihan.index');

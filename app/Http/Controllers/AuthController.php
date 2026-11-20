@@ -125,6 +125,10 @@ class AuthController extends Controller
             ? 'Pendaftaran Pemilik Kos berhasil. Role-mu permanen dan tidak dapat diganti.'
             : 'Selamat datang di KosKu, '.$user->name.'! Role-mu sudah tetap sebagai Penyewa.';
 
+        if ($data['role'] === User::ROLE_PEMILIK) {
+            return redirect()->route('dashboard')->with('success', $message);
+        }
+
         return $this->redirectToTarget($request)->with('success', $message);
     }
 
@@ -140,7 +144,11 @@ class AuthController extends Controller
             return redirect()->to($redirect);
         }
 
-        return redirect()->intended(route('landing'));
+        $defaultRoute = Auth::check() && Auth::user()->role === User::ROLE_PEMILIK
+            ? route('dashboard')
+            : route('landing');
+
+        return redirect()->intended($defaultRoute);
     }
 
     /**
