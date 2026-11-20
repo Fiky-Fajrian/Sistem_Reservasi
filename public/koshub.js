@@ -42,14 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function (event) {
             const href = link.getAttribute("href");
 
-            if (href === "#") {
+            if (!href || href === "#") {
                 event.preventDefault();
-            } else {
-                document.querySelectorAll(".nav-link").forEach(function (item) {
-                    item.classList.remove("active");
-                });
-
-                link.classList.add("active");
             }
 
             if (window.innerWidth <= 850) {

@@ -25,22 +25,22 @@
             <div class="menu-label">MENU UTAMA</div>
 
             <nav class="navigation">
-                <a href="/dashboard" class="nav-link active">
+                <a href="{{ route('dashboard') }}" class="nav-link active">
                     <span class="nav-icon">▦</span> DASHBOARD
                 </a>
-                 <a href="/properti" class="nav-link">
+                 <a href="{{ route('properti.index') }}" class="nav-link">
                     <span class="nav-icon">⌂</span> Properti Saya
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('kamar.index') }}" class="nav-link">
                     <span class="nav-icon">▤</span> Manajemen Kamar
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('penghuni.index') }}" class="nav-link">
                     <span class="nav-icon">♙</span> Data Penghuni
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('tagihan.index') }}" class="nav-link">
                     <span class="nav-icon">▧</span> Tagihan & Pembayaran
                 </a>
-                 <a href="#" class="nav-link">
+                 <a href="{{ route('meteran.index') }}" class="nav-link">
                     <span class="nav-icon">ϟ</span> Meteran
                 </a>
 
@@ -52,7 +52,7 @@
                 <a href="#" class="nav-link">
                     <span class="nav-icon">⚙</span> Pengaturan
                 </a>
-                <a href="/properti#keluhan" class="nav-link">
+                <a href="{{ route('properti.index') }}#keluhan" class="nav-link">
                     <span class="nav-icon">💬</span> Chat & Keluhan
                 </a>
             </nav>
@@ -65,9 +65,9 @@
                 </div>
 
                 <div class="user-profile">
-                    <div class="avatar">FP</div>
+                    <div class="avatar">{{ auth()->check() ? strtoupper(mb_substr(auth()->user()->name, 0, 2)) : 'FP' }}</div>
                     <div class="user-info">
-                        <strong>Pemilik Kos</strong>
+                        <strong>{{ auth()->user()->name ?? 'Pemilik Kos' }}</strong>
                         <span>Administrator</span>
                     </div>
                     <span class="profile-menu">⋯</span>
@@ -85,9 +85,9 @@
                 <div class="topbar-right">
                     <button class="icon-button" aria-label="Notifikasi">♧</button>
                     <div class="topbar-divider"></div>
-                    <div class="mini-profile">FP</div>
+                    <div class="mini-profile">{{ auth()->check() ? strtoupper(mb_substr(auth()->user()->name, 0, 2)) : 'FP' }}</div>
                     <div class="topbar-user">
-                        <strong>Pemilik Kos</strong>
+                        <strong>{{ auth()->user()->name ?? 'Pemilik Kos' }}</strong>
                         <span>Administrator</span>
                     </div>
                 </div>

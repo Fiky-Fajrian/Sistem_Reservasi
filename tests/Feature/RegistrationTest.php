@@ -37,7 +37,7 @@ class RegistrationTest extends TestCase
             'role' => 'pemilik',
         ]);
 
-        $response->assertRedirect(route('landing'));
+        $response->assertRedirect(route('dashboard'));
 
         $user = User::whereEmail('sinta.pemilik@pemilik.kosku.id')->sole();
         $this->assertSame('pemilik', $user->role);
