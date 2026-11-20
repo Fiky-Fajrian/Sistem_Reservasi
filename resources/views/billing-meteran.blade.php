@@ -68,7 +68,7 @@
             <span class="nav-icon">⌂</span> Properti Saya
         </a>
         <a href="{{ route('kamar.index') }}" class="nav-link">
-            <span class="nav-icon">▤</span> Manajemen Kamar
+            <span class="nav-icon">▤</span> Manajemen Kasur
         </a>
         <a href="{{ route('penghuni.index') }}" class="nav-link">
             <span class="nav-icon">♙</span> Data Penghuni
