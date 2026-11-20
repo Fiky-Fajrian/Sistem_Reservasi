@@ -1,4 +1,4 @@
-<x-layouts.landing>
+@component('Components.layouts.landing')
     {{-- ===== Hero ===== --}}
     <section class="lp-hero" id="beranda">
         <div class="lp-container lp-hero-inner">
@@ -134,13 +134,8 @@
     </section>
 
     {{-- Data kos untuk modal detail --}}
-    <script id="lpKosData" type="application/json">{!! json_encode($kosList) !!}</script>
     <script>
-        try {
-            window.__KOS = JSON.parse(document.getElementById('lpKosData').textContent || '[]');
-        } catch (e) {
-            window.__KOS = [];
-        }
+        window.__KOS = {{ Illuminate\Support\Js::from($kosList) }};
     </script>
 
     {{-- Modal: wajib login untuk reservasi --}}
@@ -185,6 +180,7 @@
             </div>
         </div>
     </div>
+    @if (auth()->check() && auth()->user()->role === \App\Models\User::ROLE_PENYEWA)
     {{-- Floating Chat & Keluhan Penyewa --}}
     <button type="button" class="lp-chat-fab" onclick="document.getElementById('lpComplaintModal').removeAttribute('hidden')" title="Kirim Chat / Keluhan ke Pengelola" style="position: fixed; bottom: 24px; right: 24px; z-index: 999; background: #2563eb; color: #fff; border: none; border-radius: 50px; padding: 12px 20px; font-weight: 700; font-size: 13.5px; box-shadow: 0 4px 16px rgba(37,99,235,0.4); display: flex; align-items: center; gap: 8px; cursor: pointer;">
         <span aria-hidden="true">💬</span>
@@ -242,4 +238,5 @@
             </form>
         </div>
     </div>
-</x-layouts.landing>
+    @endif
+@endcomponent

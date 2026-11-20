@@ -9,21 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserIsPenyewa
 {
-    /**
-     * Fitur reservasi hanya untuk role penyewa.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 
-        if ($user === null) {
+        if (!$user) {
             return redirect()->guest(route('login'));
         }
 
         if ($user->role !== User::ROLE_PENYEWA) {
             return redirect()
                 ->route('landing')
-                ->with('warning', 'Reservasi hanya dapat dilakukan oleh penyewa.');
+                ->with('warning', 'Halaman ini khusus untuk penyewa.');
         }
 
         return $next($request);

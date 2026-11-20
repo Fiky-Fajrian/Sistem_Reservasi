@@ -16,8 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'role.penyewa' => EnsureUserIsPenyewa::class,
-        ]);
+        'role.penyewa' => EnsureUserIsPenyewa::class,
+        'role.pengelola' => \App\Http\Middleware\EnsureUserIsPengelola::class,
+    ]);
 
         // Pengguna yang sudah login dan membuka halaman tamu (login/daftar)
         // diarahkan sesuai role-nya.

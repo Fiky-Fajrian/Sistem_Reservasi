@@ -8,36 +8,50 @@ use App\Http\Controllers\PropertiController;
 use App\Http\Controllers\ReservasiController;
 use Illuminate\Support\Facades\Route;
 
-// Halaman utama: Landing Page
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+// Landing page
+Route::get('/', [LandingController::class, 'index'])
+    ->name('landing');
 
-// Autentikasi: login & pendaftaran dengan pilihan role
+// Login dan registrasi
 Route::middleware('guest')->group(function (): void {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
-    Route::get('/daftar', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/daftar', [AuthController::class, 'register'])->name('register.store');
+    Route::get('/login', [AuthController::class, 'showLogin'])
+        ->name('login');
+
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.attempt');
+
+    Route::get('/daftar', [AuthController::class, 'showRegister'])
+        ->name('register');
+
+    Route::post('/daftar', [AuthController::class, 'register'])
+        ->name('register.store');
 });
 
+// Logout
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// Reservasi: wajib login dan khusus role penyewa
+// Fitur penyewa
 Route::middleware(['auth', 'role.penyewa'])->group(function (): void {
-    Route::get('/reservasi', [ReservasiController::class, 'index'])->name('reservasi.index');
-    Route::post('/reservasi', [ReservasiController::class, 'store'])->name('reservasi.store');
+    Route::get('/reservasi', [ReservasiController::class, 'index'])
+        ->name('reservasi.index');
+
+    Route::post('/reservasi', [ReservasiController::class, 'store'])
+        ->name('reservasi.store');
+
+    Route::post('/keluhan', [MessageController::class, 'store'])
+        ->name('keluhan.store');
 });
 
-// Fitur Chat & Keluhan Penyewa ke Pengelola Kos
-Route::post('/keluhan', [MessageController::class, 'store'])->name('keluhan.store');
-Route::put('/keluhan/{message}', [MessageController::class, 'update'])->name('keluhan.update');
+// Fitur pengelola kos dan admin
+Route::middleware(['auth', 'role.pengelola'])->group(function (): void {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-// Dashboard pemilik kos
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+    Route::get('/properti', [PropertiController::class, 'index'])
+        ->name('properti.index');
 
-// Manajemen Properti & Kamar (sesuai mockup)
-Route::get('/properti', [PropertiController::class, 'index'])
-    ->name('properti.index');
+    Route::put('/keluhan/{message}', [MessageController::class, 'update'])
+        ->name('keluhan.update');
+});
