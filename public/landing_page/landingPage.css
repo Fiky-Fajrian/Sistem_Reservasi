@@ -439,6 +439,8 @@ img, svg { display: block; }
 /* === Modals === */
 .lp-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; }
 .lp-modal[hidden] { display: none; }
+/* Modal wajib-login selalu di lapisan paling depan */
+#lpLoginModal { z-index: 95; }
 .lp-modal-backdrop { position: absolute; inset: 0; background: rgba(13, 27, 62, 0.55); backdrop-filter: blur(2px); animation: lp-fade 0.18s ease; }
 .lp-modal-panel {
     position: relative;

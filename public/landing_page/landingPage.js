@@ -115,6 +115,10 @@
                 ? (target.startsWith('#') ? landingUrlHref.pathname + target : target)
                 : window.location.pathname;
 
+            // Tutup modal lain agar kartu login tampil penuh di depan,
+            // tidak tertutup kartu detail kos.
+            qsa('.lp-modal').forEach(closeModal);
+
             const loginModal = qs('#lpLoginModal');
             const loginCta = qs('#lpLoginModalLogin');
             if (loginCta) loginCta.setAttribute('href', loginUrlWithRedirect(redirectTo));

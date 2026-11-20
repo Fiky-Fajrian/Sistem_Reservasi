@@ -135,7 +135,7 @@
 
     {{-- Data kos untuk modal detail --}}
     <script>
-        window.__KOS = {{ Illuminate\Support\Js::from($kosList) }};
+        window.__KOS = @json($kosList);
     </script>
 
     {{-- Modal: wajib login untuk reservasi --}}
